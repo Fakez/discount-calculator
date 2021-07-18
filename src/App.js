@@ -33,20 +33,36 @@ const ConditionList = ({userType, priceTables, orderValue}) => {
       <p>User type: {userType}</p>
       <p>Order value: {orderValue}</p>
       {conditions.map(condition => (
-        <Condition condition={condition} orderValue={orderValue} />
+        <Condition key={condition.title} condition={condition} orderValue={orderValue} />
       ))}
     </div>
   );
 }
 
 const Condition = ({condition, orderValue}) => {
+  const discount = condition.discount;
+  const price = orderValue * (1 - discount/100);
+  const roundedPrice = 0;
+  const roundedDiscount = 0;
+  const roundedDiscountValue = 0;
+
+  const reserveDiscount = condition.reserveDiscount;
+  const reservePrice = orderValue * (1 - reserveDiscount/100);
   return (
     <div className='condition'>
     <p>{condition.title}</p>
+    <p>Discount {discount}%</p>
+    <p>Price {price}</p>
+    <p>Rounded price {roundedPrice}</p>
+    <p>Rounded discount {roundedDiscount}</p>
+    <p>Rounded discount value {roundedDiscountValue}</p>
+    <br />
+    <p>Reserve discount {reserveDiscount}</p>
+    <p>Reserve price {reservePrice}</p>
 
     <p>Observations</p>
     <ul>
-      {condition.observations.map(observation => <li>{observation}</li>)}
+      {condition.observations.map(observation => <li key={observation}>{observation}</li>)}
     </ul>
     </div>
   );
@@ -55,7 +71,7 @@ const Condition = ({condition, orderValue}) => {
 function App({priceTables}) {
 
   const [orderValue, setOrderValue] = useState();
-  const [userType, setUserType] = useState('consultor');
+  const [userType, setUserType] = useState('gerente');
 
   return (
     <div className="App">
