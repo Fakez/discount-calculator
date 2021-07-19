@@ -12,10 +12,10 @@ const ValueInput = ({setOrderValue}) => {
     }
   
     return (
-      <div>
+      <div className='container'>
         <form onSubmit={handleSubmit} onChange={handleChange}>
-          Value <input name="orderValue" type="number"></input>
-          <button type="submit">Calulate</button>
+          Valor do pedido <input name="orderValue" type="number"></input>
+          <button type="submit">Calular</button>
         </form>
       </div>
     )

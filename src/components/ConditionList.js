@@ -7,7 +7,7 @@ const ConditionList = ({tableType, priceTables, orderValue}) => {
 
     const conditions = priceTables.find(t => t.tableName === tableType).conditions
     return (
-      <div >
+      <div className='container'>
         {conditions.map(condition => (
           <Condition key={condition.title} condition={condition} orderValue={orderValue} />
         ))}

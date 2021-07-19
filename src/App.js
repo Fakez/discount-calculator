@@ -38,9 +38,9 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <ValueInput setOrderValue={setOrderValue}/>
       <VipSearch vipClients={vipClients} setTableType={setTableType} userType={userType} />
-      <p>Table: <span className='table-name'>{tableType}</span></p>
+      <ValueInput setOrderValue={setOrderValue}/>
+      <p>Tabela: <span className='table-name'>{tableType}</span></p>
       <ConditionList tableType={tableType} priceTables={priceTables} orderValue={orderValue} />
     </div>
   );

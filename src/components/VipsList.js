@@ -12,7 +12,7 @@ const VipsList = ({vipName, vipClients, setVipName, setTableType}) => {
     return (
       clientsFiltered.length ?
       <div className='vips'>
-        <p>Clientes Vip:</p>
+        <p>Vip:</p>
         <ul>
           {clientsFiltered.map(c => (
             <li key={c.name} onClick={() => handleVipClick(c)}>{c.name} - <span className='table-name'>{c.type}</span></li>)

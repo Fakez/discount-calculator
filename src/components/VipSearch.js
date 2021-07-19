@@ -32,12 +32,12 @@ const VipSearch = ({vipClients, setTableType, userType}) => {
     }
   
     return (
-      <div>
-        VIP? <input onChange={handleCheckboxChange} type="checkbox" name="vehicle1" value="VIP" />
+      <div className='container'>
+        Vip <input onChange={handleCheckboxChange} type="checkbox" name="vehicle1" value="VIP" />
         {vipEnabled ?
         <>
         <form onSubmit={handleFormSubmit} onChange={handleFormChange}>
-          Client name <input onChange={handleInputChange} name="vipName" type="text" value={vipName}></input>
+          Nome do cliente <input onChange={handleInputChange} name="vipName" type="text" value={vipName}></input>
           {/* <button type="submit">Search</button> */}
         </form> 
         <VipsList vipName={vipName} vipClients={vipClients} setVipName={setVipName} setTableType={setTableType}/>
