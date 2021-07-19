@@ -1,5 +1,4 @@
 const VipsList = ({vipName, vipClients, setVipName, setTableType}) => {
-    // if (vipName.length < 2) return null
     if (!vipName) return null
   
     const handleVipClick = (client) => {

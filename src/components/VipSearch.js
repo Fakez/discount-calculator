@@ -9,11 +9,11 @@ const VipSearch = ({vipClients, setTableType, userType}) => {
   
   
     useEffect(() => {
-      if (!vipEnabled) {
+      if (!vipEnabled || vipName.length === 0) {
         setTableType(userType)
         setVipName('')
       }
-    }, [vipEnabled])
+    }, [vipEnabled, vipName])
   
     const handleFormSubmit = (e) => {
       e.preventDefault();
@@ -32,7 +32,7 @@ const VipSearch = ({vipClients, setTableType, userType}) => {
     }
   
     return (
-      <div className='container'>
+      <div className='vip-container'>
         Vip <input onChange={handleCheckboxChange} type="checkbox" name="vehicle1" value="VIP" />
         {vipEnabled ?
         <>

@@ -1,6 +1,6 @@
 const Header = () => {
     return (
-      <h1>Discount Calculator</h1>
+      <h1>Calculadora</h1>
     );
 }
   

@@ -6,7 +6,7 @@ body {
 }
 
 .condition {
-    border-top: 1px solid hsl(0, 0%, 0%);
+    border-top: 1px solid hsl(0, 0%, 65%);
 }
 
 ul {
@@ -17,6 +17,13 @@ ul {
 .vips li {
     text-decoration: underline;
     cursor: pointer;
+    margin: .7rem
+}
+
+.condition li {
+    margin-left: .7rem;
+    font-size: .95rem;
+
 }
 
 .table-name {
@@ -30,9 +37,15 @@ ul {
 }
 
 table {
-    width: 90%;
-    border-spacing: .5em;
+    width: 40%;
 
+    border-spacing: .5em;
+}
+
+@media only screen and (max-width: 768px) {
+    table {
+        width: 90%;
+    }
 }
 
 
@@ -46,4 +59,12 @@ td:nth-child(2) {
     font-weight: 600;
     color: hsl(0, 0%, 15%)
 
+}
+
+.vip-container {
+    margin-bottom: .7rem;
+}
+
+.vip-container input {
+    margin: .5rem 0;
 }
