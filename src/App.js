@@ -5,6 +5,10 @@ import Header from './components/Header'
 import ValueInput from './components/ValueInput'
 import ConditionList from './components/ConditionList'
 
+import PriceTableService from './services/priceTableService';
+import VipClientService from './services/vipClientService';
+
+
 const VipsList = ({vipName, vipClients, setVipName, setTableType}) => {
   // if (vipName.length < 2) return null
   if (!vipName) return null
@@ -35,6 +39,7 @@ const VipSearch = ({vipClients, setTableType, userType}) => {
 
   const [vipEnabled, setVipEnabled] = useState(false)
   const [vipName, setVipName] = useState('');
+
 
   useEffect(() => {
     if (!vipEnabled) {
@@ -75,11 +80,28 @@ const VipSearch = ({vipClients, setTableType, userType}) => {
   )
 }
 
-function App({priceTables, vipClients}) {
+function App() {
 
   const [orderValue, setOrderValue] = useState();
   const [userType, setUserType] = useState('consultor');
   const [tableType, setTableType] = useState('consultor');
+  const [priceTables, setPriceTables] = useState([]);
+  const [vipClients, setVipClients] = useState([]);
+
+
+
+  useEffect(() => {
+    const setTables = async () => {
+      const res = await PriceTableService.getAll()
+      setPriceTables(res)
+    }
+    const setClients = async () => {
+      const res = await VipClientService.getAll()
+      setVipClients(res)
+    }
+    setTables();
+    setClients();
+  }, [])
 
   return (
     <div className="App">
