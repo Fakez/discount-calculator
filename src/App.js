@@ -1,109 +1,74 @@
 import { useState } from 'react';
 import './App.css';
 
-const ValueInput = ({setOrderValue}) => {
+import Header from './components/Header'
+import ValueInput from './components/ValueInput'
+import ConditionList from './components/ConditionList'
 
-  const handleSubmit = (e) => {
+const VipsList = ({vipName}) => {
+  return (
+    <p>{vipName}</p>
+  )
+}
+
+const VipSearch = ({vipClients, setTableType}) => {
+
+  const [vipEnabled, setVipEnabled] = useState(false)
+  const [vipName, setVipName] = useState(null)
+
+
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.orderValue.value);
-    setOrderValue(e.target.orderValue.value);
+ 
   }
 
-  const handleChange = (e) => {
-    setOrderValue(e.target.value);
+  const handleFormChange = (e) => {
+    setVipName(e.target.value);
+  }
 
+  const handleCheckboxChange = (e) => {
+    setVipEnabled(!vipEnabled);
   }
 
   return (
     <div>
-      <form onSubmit={handleSubmit} onChange={handleChange}>
-        Value <input name="orderValue" type="number"></input>
-        <button type="submit">Calulate</button>
-      </form>
+      VIP? <input onChange={handleCheckboxChange} type="checkbox" name="vehicle1" value="VIP" />
+      {vipEnabled ?
+      <>
+      <form onSubmit={handleFormSubmit} onChange={handleFormChange}>
+        Client name or code <input name="vipName" type="text"></input>
+        <button type="submit">Search</button>
+      </form> 
+      <VipsList vipName={vipName} />
+      </>
+      : null}
     </div>
   )
 }
 
-const ConditionList = ({userType, priceTables, orderValue}) => {
-
-  const conditions = priceTables.find(t => t.tableName === userType).conditions
-
-  return (
-    <div >
-      {conditions.map(condition => (
-        <Condition key={condition.title} condition={condition} orderValue={orderValue} />
-      ))}
-    </div>
-  );
-}
-
-const Condition = ({condition, orderValue}) => {
-
-  const roundDown =  (num, precision) => {
-    //10 for 1 place, 100 for 2 places, 1000 for 3...
-    num = parseFloat(num);
-    if (!precision) return num
-    return (Math.floor(num / precision) * precision)
-  }
-
-  const formatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  });
-
-  let precision;
-  if (orderValue < 5000) { precision = 10 }
-  else if (orderValue < 10000) { precision = 50 }
-  else { precision = 100 }
-
-  const discount = condition.discount;
-  const price = orderValue * (1 - discount/100);
-  const roundedPrice = roundDown(price, precision);
-  const roundedDiscount = ((1-(roundedPrice / orderValue)) * 100).toFixed(2);
-  const roundedDiscountValue = orderValue - roundedPrice;
-
-  const reserveDiscount = condition.reserveDiscount.toFixed(2);
-  const reservePrice = orderValue * (1 - reserveDiscount/100);
-  const roundedReservePrice = roundDown(reservePrice, precision);
-
-
-
-  return (
-    <div className='condition'>
-    <p>{condition.title}</p>
-    <p>Discount {discount}%</p>
-    <p>Price {formatter.format(price)}</p>
-    <p>Rounded price {formatter.format(roundedPrice)}</p>
-    <p>Rounded discount {roundedDiscount}%</p>
-    <p>Rounded discount value {formatter.format(roundedDiscountValue)}</p>
-    <br />
-    <p>Reserve discount {reserveDiscount}%</p>
-    <p>Reserve price {formatter.format(roundedReservePrice)}</p>
-
-    <p>Observations</p>
-    <ul>
-      {condition.observations.map(observation => <li key={observation}>{observation}</li>)}
-    </ul>
-    </div>
-  );
-}
-
-function App({priceTables}) {
+function App({priceTables, vipClients}) {
 
   const [orderValue, setOrderValue] = useState();
-  const [userType, setUserType] = useState('gerente');
+  const [tableType, setTableType] = useState('gerente');
 
   return (
     <div className="App">
-      <h1>Discount Calculator</h1>
+      <Header />
       <ValueInput setOrderValue={setOrderValue}/>
-      <p>User type: {userType} 
-        <button onClick={() => setUserType('consultor')}>consultor</button>
-        <button onClick={() => setUserType('gerente')}>gerente</button>
+      <VipSearch vipClients={vipClients} setTableType={setTableType} />
+      {/* debug */}
+      <p>User type: {tableType} 
+        <button onClick={() => setTableType('consultor')}>consultor</button>
+        <button onClick={() => setTableType('gerente')}>gerente</button>
+        <button onClick={() => setTableType('vip1')}>vip1</button>
+        <button onClick={() => setTableType('vip2')}>vip2</button>
+
       </p>
       <p>Order value: {orderValue}</p>
+      {/* debug */}
+
       {orderValue ? 
-      <ConditionList userType={userType} priceTables={priceTables} orderValue={orderValue} /> :
+      <ConditionList tableType={tableType} priceTables={priceTables} orderValue={orderValue} /> :
       null}
     </div>
   );
