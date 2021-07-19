@@ -12,7 +12,7 @@ export const vipClients = [
     {
         name: 'Jameel Khalid',
         clientCode: '87867889',
-        type: 'vip1'
+        type: 'vip2'
     },
     {
         name: 'Gabriel Kopsf',

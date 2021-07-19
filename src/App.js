@@ -1,13 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 import Header from './components/Header'
 import ValueInput from './components/ValueInput'
 import ConditionList from './components/ConditionList'
 
-const VipsList = ({vipName, vipClients, setTableType}) => {
+const VipsList = ({vipName, vipClients, setVipName, setTableType}) => {
   // if (vipName.length < 2) return null
   if (!vipName) return null
+
+  const handleVipClick = (client) => {
+    setTableType(client.type);
+    setVipName(client.name);
+  }
 
   const clientsFiltered = vipClients.filter(c => c.name.toLowerCase().includes(vipName.toLowerCase()))
   .sort((a,b) => a.name<b.name ? -1 : 1)
@@ -15,31 +20,43 @@ const VipsList = ({vipName, vipClients, setTableType}) => {
     clientsFiltered.length ?
     <div className='vips'>
       <p>Clientes Vip:</p>
-      {clientsFiltered.map(c => (
-      <p key={c.name} onClick={() => setTableType(c.type)}>{c.name} - {c.type}</p>))}
+      <ul>
+        {clientsFiltered.map(c => (
+          <li key={c.name} onClick={() => handleVipClick(c)}>{c.name} - <span className='table-name'>{c.type}</span></li>)
+        )}
+      </ul>
     </div>
     : <span>No client found.</span>
   
   )
 }
 
-const VipSearch = ({vipClients, setTableType}) => {
+const VipSearch = ({vipClients, setTableType, userType}) => {
 
   const [vipEnabled, setVipEnabled] = useState(false)
-  const [vipName, setVipName] = useState(null)
+  const [vipName, setVipName] = useState('');
 
+  useEffect(() => {
+    if (!vipEnabled) {
+      setTableType(userType)
+      setVipName('')
+    }
+  }, [vipEnabled])
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
- 
   }
 
   const handleFormChange = (e) => {
+    //setVipName(e.target.value);
+  }
+
+  const handleInputChange = (e) => {
     setVipName(e.target.value);
   }
 
   const handleCheckboxChange = (e) => {
-    setVipEnabled(!vipEnabled);
+    setVipEnabled(vipEnabled => !vipEnabled);
   }
 
   return (
@@ -48,10 +65,10 @@ const VipSearch = ({vipClients, setTableType}) => {
       {vipEnabled ?
       <>
       <form onSubmit={handleFormSubmit} onChange={handleFormChange}>
-        Client name <input name="vipName" type="text"></input>
+        Client name <input onChange={handleInputChange} name="vipName" type="text" value={vipName}></input>
         {/* <button type="submit">Search</button> */}
       </form> 
-      <VipsList vipName={vipName} vipClients={vipClients} setTableType={setTableType}/>
+      <VipsList vipName={vipName} vipClients={vipClients} setVipName={setVipName} setTableType={setTableType}/>
       </>
       : null}
     </div>
@@ -61,22 +78,22 @@ const VipSearch = ({vipClients, setTableType}) => {
 function App({priceTables, vipClients}) {
 
   const [orderValue, setOrderValue] = useState();
-  const [tableType, setTableType] = useState('vip1');
+  const [userType, setUserType] = useState('consultor');
+  const [tableType, setTableType] = useState('consultor');
 
   return (
     <div className="App">
       <Header />
       <ValueInput setOrderValue={setOrderValue}/>
-      <VipSearch vipClients={vipClients} setTableType={setTableType} />
+      <VipSearch vipClients={vipClients} setTableType={setTableType} userType={userType} />
       {/* debug */}
-      <p>User type: {tableType} 
-        <button onClick={() => setTableType('consultor')}>consultor</button>
+      <p>Table: <span className='table-name'>{tableType}</span></p>
+        {/* <button onClick={() => setTableType('consultor')}>consultor</button>
         <button onClick={() => setTableType('gerente')}>gerente</button>
         <button onClick={() => setTableType('vip1')}>vip1</button>
         <button onClick={() => setTableType('vip2')}>vip2</button>
-
       </p>
-      <p>Order value: {orderValue}</p>
+      <p>Order value: {orderValue}</p> */}
       {/* debug */}
 
       {orderValue ? 
