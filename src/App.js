@@ -40,16 +40,7 @@ function App() {
       <Header />
       <ValueInput setOrderValue={setOrderValue}/>
       <VipSearch vipClients={vipClients} setTableType={setTableType} userType={userType} />
-      {/* debug */}
       <p>Table: <span className='table-name'>{tableType}</span></p>
-        {/* <button onClick={() => setTableType('consultor')}>consultor</button>
-        <button onClick={() => setTableType('gerente')}>gerente</button>
-        <button onClick={() => setTableType('vip1')}>vip1</button>
-        <button onClick={() => setTableType('vip2')}>vip2</button>
-      </p>
-      <p>Order value: {orderValue}</p> */}
-      {/* debug */}
-
       <ConditionList tableType={tableType} priceTables={priceTables} orderValue={orderValue} />
     </div>
   );

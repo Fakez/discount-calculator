@@ -20,10 +20,10 @@ const Condition = ({condition, orderValue}) => {
     const discount = condition.discount;
     const price = orderValue * (1 - discount/100);
     const roundedPrice = roundDown(price, precision);
-    const roundedDiscount = ((1-(roundedPrice / orderValue)) * 100).toFixed(2);
+    const roundedDiscount = ((1-(roundedPrice / orderValue)) * 100);
     const roundedDiscountValue = orderValue - roundedPrice;
   
-    const reserveDiscount = condition.reserveDiscount.toFixed(2);
+    const reserveDiscount = condition.reserveDiscount;
     const reservePrice = orderValue * (1 - reserveDiscount/100);
     const roundedReservePrice = roundDown(reservePrice, precision);
   
@@ -32,16 +32,23 @@ const Condition = ({condition, orderValue}) => {
     return (
       <div className='condition'>
       <p>{condition.title}</p>
-      <p>Discount {discount}%</p>
+      <p>Discount {discount.toFixed(2)}%</p>
       <p>Price {formatter.format(price)}</p>
       <p>Rounded price {formatter.format(roundedPrice)}</p>
-      <p>Rounded discount {roundedDiscount}%</p>
-      <p>Rounded discount value {formatter.format(roundedDiscountValue)}</p>
+      {roundedDiscount ?
+      <div>
+        <p>Rounded discount {roundedDiscount.toFixed(2)}%</p>
+        <p>Rounded discount value {formatter.format(roundedDiscountValue)}</p>
+      </div> : null }
       <br />
-      <p>Reserve discount {reserveDiscount}%</p>
-      <p>Reserve price {formatter.format(roundedReservePrice)}</p>
+      {reserveDiscount ?
+      <div>
+        <p>Reserve discount {reserveDiscount.toFixed(2)}%</p>
+        <p>Reserve price {formatter.format(roundedReservePrice)}</p>
+      </div> : <div>No reserve discount</div> }
   
       <p>Observations</p>
+
       <ul>
         {condition.observations.map(observation => <li key={observation}>{observation}</li>)}
       </ul>
