@@ -1,7 +1,8 @@
 body {
-    font-family: helvetica;
+    font-family: arial;
     max-width: 900px;
     margin: 0 auto;
+
 }
 
 .condition {
@@ -16,13 +17,33 @@ ul {
 .vips li {
     text-decoration: underline;
     cursor: pointer;
-    margin: .7rem;
 }
 
 .table-name {
     text-transform: uppercase;
 }
 
-.container {
-    margin: .7rem
+.App {
+    margin-top: .7rem;
+    margin-left: .7rem;
+    margin-right: .7rem;
+}
+
+table {
+    width: 90%;
+    border-spacing: .5em;
+
+}
+
+
+td:first-child {
+    font-size: .85rem;
+    color: hsl(0, 0%, 30%)
+}
+
+td:nth-child(2) {
+    font-size: .9rem;
+    font-weight: 600;
+    color: hsl(0, 0%, 15%)
+
 }

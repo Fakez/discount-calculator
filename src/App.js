@@ -40,7 +40,6 @@ function App() {
       <Header />
       <VipSearch vipClients={vipClients} setTableType={setTableType} userType={userType} />
       <ValueInput setOrderValue={setOrderValue}/>
-      <p>Tabela: <span className='table-name'>{tableType}</span></p>
       <ConditionList tableType={tableType} priceTables={priceTables} orderValue={orderValue} />
     </div>
   );

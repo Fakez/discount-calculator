@@ -36,27 +36,49 @@ const Condition = ({condition, orderValue}) => {
   
     return (
       <div className='condition'>
-      <p>{condition.title}</p>
-      <p>Desconto {discount.toFixed(2)}%</p>
-      <p>Preço {formatter.format(price)}</p>
-      <p>Preço arredondado {formatter.format(roundedPrice)}</p>
-      {roundedDiscount ?
-      <div>
-        <p>Desconto arredondado {roundedDiscount.toFixed(2)}%</p>
-        <p>Desconto arrendondado {formatter.format(roundedDiscountValue)}</p>
-      </div> : null }
-      <br />
-      {reserveDiscount ?
-      <div>
-        <p>Desconto reserva {reserveDiscount.toFixed(2)}%</p>
-        <p>Preço reserva {formatter.format(roundedReservePrice)}</p>
-      </div> : <div>No reserve discount</div> }
-  
-      <p>Observações</p>
+        <p>{condition.title}</p>
+        <table>
+          <tbody>
+          <tr>
+            <td>Desconto</td>
+            <td>{discount.toFixed(2)}%</td>
+          </tr>
+          <tr>
+            <td>Preço</td>
+            <td>{formatter.format(price)}</td>
+          </tr>
+          <tr>
+            <td>Preço arredondado</td>
+            <td>{formatter.format(roundedPrice)}</td>
+          </tr>
+          {roundedDiscount ?
+            <>
+            <tr>
+              <td>Desconto arredondado</td>
+              <td>{roundedDiscount.toFixed(2)}%</td>
+            </tr>
+              <tr><td>Desconto arrendondado</td>
+              <td>{formatter.format(roundedDiscountValue)}</td>
+            </tr></> : null }
+          {reserveDiscount ?
+            <>
+            <tr>
+              <td>Desconto reserva</td>
+              <td>{reserveDiscount.toFixed(2)}%
+              </td>
+            </tr>
+            <tr>
+              <td>Preço reserva</td>
+              <td>{formatter.format(roundedReservePrice)}</td>
+            </tr>
+            </> : null }
+          </tbody>
+        </table>
+        <p>Observações</p>
 
-      <ul>
-        {condition.observations.map(observation => <li key={observation}>- {observation}</li>)}
-      </ul>
+        <ul>
+          {condition.observations.map(observation => <li key={observation}>- {observation}</li>)}
+        </ul>
       </div>
     );
 }
