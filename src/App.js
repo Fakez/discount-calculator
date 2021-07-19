@@ -30,8 +30,6 @@ const ConditionList = ({userType, priceTables, orderValue}) => {
 
   return (
     <div >
-      <p>User type: {userType}</p>
-      <p>Order value: {orderValue}</p>
       {conditions.map(condition => (
         <Condition key={condition.title} condition={condition} orderValue={orderValue} />
       ))}
@@ -99,7 +97,14 @@ function App({priceTables}) {
     <div className="App">
       <h1>Discount Calculator</h1>
       <ValueInput setOrderValue={setOrderValue}/>
-      <ConditionList userType={userType} priceTables={priceTables} orderValue={orderValue} />
+      <p>User type: {userType} 
+        <button onClick={() => setUserType('consultor')}>consultor</button>
+        <button onClick={() => setUserType('gerente')}>gerente</button>
+      </p>
+      <p>Order value: {orderValue}</p>
+      {orderValue ? 
+      <ConditionList userType={userType} priceTables={priceTables} orderValue={orderValue} /> :
+      null}
     </div>
   );
 }
