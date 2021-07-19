@@ -5,9 +5,21 @@ import Header from './components/Header'
 import ValueInput from './components/ValueInput'
 import ConditionList from './components/ConditionList'
 
-const VipsList = ({vipName}) => {
+const VipsList = ({vipName, vipClients, setTableType}) => {
+  // if (vipName.length < 2) return null
+  if (!vipName) return null
+
+  const clientsFiltered = vipClients.filter(c => c.name.toLowerCase().includes(vipName.toLowerCase()))
+  .sort((a,b) => a.name<b.name ? -1 : 1)
   return (
-    <p>{vipName}</p>
+    clientsFiltered.length ?
+    <div className='vips'>
+      <p>Clientes Vip:</p>
+      {clientsFiltered.map(c => (
+      <p key={c.name} onClick={() => setTableType(c.type)}>{c.name} - {c.type}</p>))}
+    </div>
+    : <span>No client found.</span>
+  
   )
 }
 
@@ -36,10 +48,10 @@ const VipSearch = ({vipClients, setTableType}) => {
       {vipEnabled ?
       <>
       <form onSubmit={handleFormSubmit} onChange={handleFormChange}>
-        Client name or code <input name="vipName" type="text"></input>
-        <button type="submit">Search</button>
+        Client name <input name="vipName" type="text"></input>
+        {/* <button type="submit">Search</button> */}
       </form> 
-      <VipsList vipName={vipName} />
+      <VipsList vipName={vipName} vipClients={vipClients} setTableType={setTableType}/>
       </>
       : null}
     </div>
@@ -49,7 +61,7 @@ const VipSearch = ({vipClients, setTableType}) => {
 function App({priceTables, vipClients}) {
 
   const [orderValue, setOrderValue] = useState();
-  const [tableType, setTableType] = useState('gerente');
+  const [tableType, setTableType] = useState('vip1');
 
   return (
     <div className="App">
