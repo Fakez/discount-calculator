@@ -1,4 +1,3 @@
-import NumberFormat from 'react-number-format';
 
 const ValueInput = ({setOrderValue}) => {
 

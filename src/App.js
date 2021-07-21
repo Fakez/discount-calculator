@@ -27,26 +27,32 @@ function App() {
   useEffect(() => {
     const setCurrentUser = async () => {
       const res = await UserService.getCurrentUser()
-
       const groups = res.groups;
-      if (groups.includes('Admin')) {setIsAdmin(true); setUserType('gerente')};
+      if (groups.includes('Admin')) {setIsAdmin(true); setUserType('consultor')};
       if (groups.includes('Gerente')) {setUserType('gerente')};
       if (groups.includes('Consultor')) {setUserType('consultor')};
-
     }
+    setCurrentUser();
+  }, [])
 
+  useEffect(() => {
     const setTables = async () => {
-      const res = await PriceTableService.getAll()
-      setPriceTables(res)
+      setPriceTables([
+        ...priceTables,
+        await PriceTableService.getTable('consultor'),
+        await PriceTableService.getTable('gerente'),
+        await PriceTableService.getTable('vip1'),
+        await PriceTableService.getTable('vip2'),
+      ]);
     }
+    setTables();
+  }, [])
 
+  useEffect(() => {
     const setClients = async () => {
       const res = await VipClientService.getAll()
       setVipClients(res)
     }
-
-    setCurrentUser();
-    setTables();
     setClients();
   }, [])
 

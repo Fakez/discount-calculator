@@ -76,9 +76,10 @@ const Condition = ({condition, orderValue}) => {
         </table>
         <p>Observações</p>
 
-        <ul>
-          {condition.observations.map(observation => <li key={observation}>- {observation}</li>)}
-        </ul>
+        <div>
+          {/* {condition.observations.map(observation => <li key={observation}>- {observation}</li>)} */}
+          {condition.observations.split('\n').map((line,idx) => <p key={`${idx}-${line}`} >- {line}</p>)}
+        </div>
       </div>
     );
 }
